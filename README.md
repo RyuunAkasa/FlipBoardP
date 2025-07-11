@@ -8,7 +8,7 @@ It was fun to create it.Code is developer friendly.
 
 Let’s leave the code aside for a second and just focus on how it works:
 
-- Simply run the `main.pyw` file or the `.exe` file available in the `exe version` folder.
+- Simply run the `main.pyw` file or the `.exe` file available in the release or `exe version` folder.
 - Once you launch the app, it will:
   1. Create a mini server.
   2. Make your PC’s clipboard (text or links) available to other devices on the same network — **without requiring the internet**.
