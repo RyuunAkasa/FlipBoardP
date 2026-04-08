@@ -8,7 +8,7 @@ It was fun to create it.Code is developer friendly.
 
 Let’s leave the code aside for a second and just focus on how it works:
 
-- Simply run the `main.pyw` file or the `.exe` file available in the `exe version` folder.
+- Simply run the `main.pyw` file .
 - Once you launch the app, it will:
   1. Create a mini server.
   2. Make your PC’s clipboard (text or links) available to other devices on the same network — **without requiring the internet**.
@@ -35,9 +35,7 @@ Just make sure the `token.env` file is in the same folder as the main script or 
   - A **QR code** you can scan to access the URL directly.
   - Or, you can manually enter the URL in your browser.
 
-The server supports both **receiving** and **sending** clipboard data. However:
-- By default, it's designed for **one-way sharing (PC ➝ device)** for general users.
-- Advanced users can implement a custom app to send data back to the PC using the `recieve_data` endpoint.
+The server supports both **receiving** and **sending** clipboard data.
 
 The app also monitors your PC clipboard in real-time — visible in the mini UI window in this app.
 
@@ -45,17 +43,12 @@ The app also monitors your PC clipboard in real-time — visible in the mini UI 
 
 ## ▶️ Quick Summary
 
-1. Run the Python file or `.exe`.
+1. Run the Python file .
 2. Scan the QR code or open the shown URL in your browser.
 3. Access the clipboard data from your PC — instantly.
 
 ---
 
-## 💻 For .exe Users
-
-You only need:
-- `flipboardp.exe`
-- `token.env` (optional)
 
 ## 🐍 For Python Users
 
@@ -63,14 +56,6 @@ You need:
 - `main.pyw`
 - `utilities/` directory
 - `token.env` (or `.env.example` to copy from)
-
----
-
-## ⚠️ Notes
-
-- The `.exe` is a bundled version of the Python script + interpreter, created using **PyInstaller**.
-- On first run, Windows may ask for **network or firewall permission**. This is expected and safe for personal use.
-- Avoid using this on **public or untrusted networks**.
 
 ---
 
