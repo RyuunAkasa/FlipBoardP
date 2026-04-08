@@ -1,0 +1,83 @@
+
+        /* Page background */
+        body {
+            font-family: "Lucida Console", "Courier New", monospace;
+
+            background: linear-gradient(135deg, #439bff, #c545ba);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2, h3 {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            overflow-x: auto;
+            font-size: 1.1em;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: transform 0.3s;
+        }
+
+        pre:hover {
+            transform: scale(1.02);
+        }
+
+        input[type="text"] {
+            width: 90%;
+            max-width: 400px;
+            padding: 12px 15px;
+            border-radius: 25px;
+            border: none;
+            font-size: 1em;
+            margin-top: 10px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 0 10px rgb(255, 255, 255);
+        }
+        input[type="text"]::placeholder {
+           text-align: center;
+        }
+
+        #sendbtn {
+            margin-top: 15px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            color: gainsboro;
+            background-color: #439bff;
+            font-size: 1.2em;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgb(43, 43, 43);
+            transition: all 0.3s;
+        }
+
+
+        #status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Animate clipboard fade-in */
+        #clipboard {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }

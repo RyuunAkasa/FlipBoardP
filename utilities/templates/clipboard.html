@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FlipBoard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>PC Clipboard</h2>
+    <h4>Tap to copy</h4>
+<pre id="clipboard" onclick="copyClipboard()">{{ clipboard_data }}</pre>
+
+
+
+    <h3>Send text to PC:</h3>
+    <input type="text" id="inputText" placeholder="Your text here">
+    <button id="sendbtn" onclick="sendText()">Send</button>
+
+    <p id="status"></p>
+
+    <script >
+    
+
+    
+    function sendText() {
+            const text = document.getElementById('inputText').value;
+            fetch('/clipboard{{ "?token=" + token if token_mode else "" }}', {
+                method: 'POST',
+                body: text
+            }).then(response => {
+                if(response.ok){
+                    document.getElementById('status').innerText = "Sent successfully!";
+                    document.getElementById('inputText').value = "";
+                } else {
+                    document.getElementById('status').innerText = "Error sending!";
+                }
+            }).catch(err => {
+                document.getElementById('status').innerText = "Error: " + err;
+            });
+        }
+
+
+
+let tempClipboard = {{ clipboard_data | tojson }};
+
+function checkClipboardUpdate() {
+    fetch("/clipboard/updating")
+        .then(response => response.json())
+        .then(data => {
+            if (data.clipboard_data !== tempClipboard) {
+                tempClipboard = data.clipboard_data;
+                document.getElementById("clipboard").innerText = tempClipboard;
+                console.log("Clipboard updated:", tempClipboard);
+            }
+        })
+        .catch(err => console.error("Error updating clipboard:", err));
+}
+
+setInterval(checkClipboardUpdate, 2000); // checks every 2 seconds
+
+
+        
+function copyClipboard() {
+    const text = document.getElementById('clipboard').innerText;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        // Modern method (works on Chrome/Firefox over HTTPS)
+        navigator.clipboard.writeText(text).then(() => showCopiedFeedback());
+    } else {
+        // Fallback for older or insecure contexts
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand("copy");
+            showCopiedFeedback();
+        } catch (err) {
+            console.log("Fallback: Unable to copy", err);
+        }
+        document.body.removeChild(textarea);
+    }
+}
+
+function showCopiedFeedback() {
+    document.getElementById('status').innerText = "Copied!";
+    const clipboardElement = document.getElementById('clipboard');
+    const originalBg = clipboardElement.style.background;
+    clipboardElement.style.background = "rgba(255,255,255,0.4)";
+    setTimeout(() => {
+        clipboardElement.style.background = originalBg || "rgba(0,0,0,0.3)";
+    }, 300);
+}
+</script>
+</body>
+</html>
