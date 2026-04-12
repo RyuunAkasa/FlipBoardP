@@ -22,7 +22,7 @@ To limit who on the network can access your clipboard:
 - Set `TOKEN_MODE=True` and define a `TOKEN_TEXT=your_password`.
 
 Think of the token as a password required to access the data from your phone.  
-Just make sure the `token.env` file is in the same folder as the main script or `.exe`.  
+Just make sure the `token.env` file is in the same folder as the main script.  
 ⚠️ If you don’t enable token mode, **anyone on the network** (who knows the URL) can access the data.
 
 ---
