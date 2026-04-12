@@ -3,11 +3,17 @@ import qrcode
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 import io
+import ctypes 
+
+# 2. Telling Windows this is a unique app, not just a generic Python script
+myappid = 'flipboard.gui' # This string can be anything 
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 class FlipBoardGUI:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("FlipBoardP")
+        self.root.iconbitmap('flipboardp.ico')
 
         window_width = 300
         window_height = 100
