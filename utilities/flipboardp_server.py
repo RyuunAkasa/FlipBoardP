@@ -5,13 +5,14 @@ import threading
 from waitress import serve
 
 class MiniServer:
-    def __init__(self, visual_update, clipboard_manager_class_object,token_mode = False,token_text = ""):
+    def __init__(self, visual_update, clipboard_manager_class_object,token_mode = False,token_text = "",pc_info=None):
         self.visual_update = visual_update
         self.clipboard = clipboard_manager_class_object
 
         self.app = Flask(__name__)
         self.token_mode = token_mode
         self.token_text = token_text
+        self.pc_info = pc_info
 
         # Register routes dynamically here
         self.app.add_url_rule("/clipboard", view_func=self.send_data, methods=["GET"])
@@ -52,6 +53,7 @@ class MiniServer:
         return render_template(
             "clipboard.html",
             clipboard_data=self.clipboard.clipboard_data,
+            pc_info = self.pc_info if self.pc_info else "Pc Clipboard",
             token_mode=self.token_mode,
             token=self.token_text
         )
@@ -76,7 +78,7 @@ class MiniServer:
 
 # This will be called each time the pc gets new clipboard text update
     def update_data_on_page(self):
-        return {"clipboard_data": self.clipboard.clipboard_data}
+        return {"clipboard_data": self.clipboard.clipboard_data,"pc_info":self.pc_info}
 
 #runs the server and check for any clipboard update only if token values are not mismatched
     def run_server(self):

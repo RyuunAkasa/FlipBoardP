@@ -17,16 +17,21 @@ class FlipBoardGUI:
         y = screen_height - window_height - 50
         self.root.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
-
         self.root.resizable(False,False)
         self.root.attributes('-topmost', True)
         self.root.attributes('-alpha', 0.7)
 
+        # === 70/30 Split Layout ===
+        self.log_frame = tk.Frame(self.root)
+        self.log_frame.place(relx=0, rely=0, relwidth=0.7, relheight=1)
+
+        self.right_frame = tk.Frame(self.root)
+        self.right_frame.place(relx=0.7, rely=0, relwidth=0.3, relheight=1)
 
 
-        # === Log Area ===
-        self.text = ScrolledText(self.root, wrap='word', font=("Consolas", 9), height=7)
-        self.text.pack(expand=False, fill='both')
+        # === Log Area (70% Frame) ===
+        self.text = ScrolledText(self.log_frame, wrap='word', font=("Consolas", 9))
+        self.text.pack(expand=True, fill='both')
         self.text.configure(state='disabled')
 
         # === Log Color Tags ===
@@ -36,17 +41,17 @@ class FlipBoardGUI:
         self.text.tag_config("error", foreground="red")
         self.text.tag_config("info", foreground="blue")
 
+        # === Right Area (30% Frame) ===
+        self.qr_label = tk.Label(self.right_frame)
+        self.qr_label.pack(expand=True, fill='both')
+
         self.log(" FlipBoardP is running...", type="success")
-
-
-
-
 
 
 # qr code generator
     def generate_qr(self, url: str):
         """
-        Generates a QR from the given URL and embeds it inside the log area.
+        Generates a QR from the given URL and displays it in the 30% right area.
         """
         qr = qrcode.QRCode(box_size=2, border=1)
         qr.add_data(url)
@@ -60,15 +65,9 @@ class FlipBoardGUI:
             image = Image.open(buffer)
             tk_img = ImageTk.PhotoImage(image)
 
-        label = tk.Label(self.text, image=tk_img)
-        label.image = tk_img  # Prevent GC
-        self.text.configure(state='normal')
-        self.text.insert('end', '\n')  # Line break
-        self.text.window_create('end', window=label)
-        self.text.insert('end', '\n')  # Optional line after QR
-        self.text.configure(state='disabled')
-
-
+        # Display the image in the right frame instead of text area
+        self.qr_label.configure(image=tk_img)
+        self.qr_label.image = tk_img  # Prevent GC
 
 
 # Showing logs text
@@ -83,9 +82,6 @@ class FlipBoardGUI:
         self.text.insert('end', f"{message}\n", type)
         self.text.see('end')
         self.text.configure(state='disabled')
-
-
-
 
 
     def start(self):

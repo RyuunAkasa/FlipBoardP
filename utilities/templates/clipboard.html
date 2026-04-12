@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>PC Clipboard</h2>
+    <h2 id = "pc_info">{{pc_info}}</h2>
     <h4>Tap to copy</h4>
 <pre id="clipboard" onclick="copyClipboard()">{{ clipboard_data }}</pre>
 
@@ -50,6 +50,7 @@ function checkClipboardUpdate() {
             if (data.clipboard_data !== tempClipboard) {
                 tempClipboard = data.clipboard_data;
                 document.getElementById("clipboard").innerText = tempClipboard;
+                if (data.pc_info) {document.getElementById("pc_info").textContent = data.pc_info;}
                 console.log("Clipboard updated:", tempClipboard);
             }
         })
