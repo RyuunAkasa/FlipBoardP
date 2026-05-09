@@ -56,7 +56,7 @@ class ClipboardManager:
     def save(self,data,file_path):
 
         try:
-            with open(file_path,'a') as history_file:
+            with open(file_path, 'a', encoding='utf-8') as history_file:
                 data = f'{self.history_serial}. - {datetime.datetime.now()} - {data}\n\n'
                 if history_file.write(data) == len(data):
                     self.visual_update.log('Saved to clipboard history.','info')
